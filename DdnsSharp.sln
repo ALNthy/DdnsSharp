@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33815.320
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DdnsSharp", "DdnsSharp\DdnsSharp.csproj", "{6F79B9B7-30D6-4864-9D23-5E83AE322DD0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DdnsCore", "DdnsCore\DdnsCore.csproj", "{0E2CC69E-01C6-4682-B8BB-17B9C705174C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6F79B9B7-30D6-4864-9D23-5E83AE322DD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F79B9B7-30D6-4864-9D23-5E83AE322DD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F79B9B7-30D6-4864-9D23-5E83AE322DD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F79B9B7-30D6-4864-9D23-5E83AE322DD0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E2CC69E-01C6-4682-B8BB-17B9C705174C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E2CC69E-01C6-4682-B8BB-17B9C705174C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E2CC69E-01C6-4682-B8BB-17B9C705174C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E2CC69E-01C6-4682-B8BB-17B9C705174C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3C029359-06B7-4BCB-98AB-300BCCF89AF4}
+	EndGlobalSection
+EndGlobal
