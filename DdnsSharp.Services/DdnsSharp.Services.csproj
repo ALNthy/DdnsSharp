@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DdnsSharp.IRepository\DdnsSharp.IRepository.csproj" />
+    <ProjectReference Include="..\DdnsSharp.IServices\DdnsSharp.IServices.csproj" />
+  </ItemGroup>
+
+</Project>

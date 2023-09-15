@@ -2,12 +2,25 @@
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
-    <Nullable>enable</Nullable>
+    <!--<Nullable>enable</Nullable>-->
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.11">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\DdnsCore\DdnsCore.csproj" />
+    <ProjectReference Include="..\DdnsSharp.EFCore\DdnsSharp.EFCore.csproj" />
+    <ProjectReference Include="..\DdnsSharp.IRepository\DdnsSharp.IRepository.csproj" />
+    <ProjectReference Include="..\DdnsSharp.IServices\DdnsSharp.IServices.csproj" />
+    <ProjectReference Include="..\DdnsSharp.Model\DdnsSharp.Model.csproj" />
+    <ProjectReference Include="..\DdnsSharp.Repository\DdnsSharp.Repository.csproj" />
+    <ProjectReference Include="..\DdnsSharp.Services\DdnsSharp.Services.csproj" />
   </ItemGroup>
 
 </Project>
