@@ -1,4 +1,6 @@
-﻿using DdnsSharp.IServices;
+﻿using DdnsSharp.Core;
+using DdnsSharp.Core.DdnsClient;
+using DdnsSharp.IServices;
 using Microsoft.AspNetCore.Components;
 
 namespace DdnsSharp.Pages
@@ -7,5 +9,6 @@ namespace DdnsSharp.Pages
     {
         [Inject]
         IDdnsConfigService DdnsConfigService { get; set; }
+
     }
 }

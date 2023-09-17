@@ -15,6 +15,7 @@ namespace DdnsSharp.EFCore.Configs
         {
             builder.ToTable($"T_{nameof(DdnsConfig)}s");
             builder.HasKey(x=>x.Guid);
+
         }
     }
 }

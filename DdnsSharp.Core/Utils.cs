@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 using System.Net.NetworkInformation;
 using System.Net;
 using System.Net.Sockets;
+using DdnsSharp.Core.Model;
 
-namespace DdnsCore
+namespace DdnsSharp.Core
 {
     public static class Utils
     {

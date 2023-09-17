@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DdnsCore\DdnsCore.csproj" />
+    <ProjectReference Include="..\DdnsSharp.Core\DdnsSharp.Core.csproj" />
     <ProjectReference Include="..\DdnsSharp.EFCore\DdnsSharp.EFCore.csproj" />
     <ProjectReference Include="..\DdnsSharp.IRepository\DdnsSharp.IRepository.csproj" />
     <ProjectReference Include="..\DdnsSharp.IServices\DdnsSharp.IServices.csproj" />

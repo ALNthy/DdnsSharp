@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DdnsCore
+namespace DdnsSharp.Core.Model
 {
     public class NetworkModel
     {
