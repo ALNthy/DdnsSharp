@@ -29,7 +29,7 @@ namespace DdnsSharp.HostedService
 
         private async Task WokrAsync(CancellationToken cancellationToken)
         {
-            using (var scope = _serviceScope.CreateScope())
+            using (var scope =  _serviceScope.CreateAsyncScope())
             {
                 IDdnsConfigService _ddnsConfigService = scope.ServiceProvider.GetService<IDdnsConfigService>();
                 await Task.Delay(0);

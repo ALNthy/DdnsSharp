@@ -12,6 +12,8 @@ builder.Services.AddServerSideBlazor();
 
 builder.Services.AddDbContext<SqlDbContext>(x=>x.UseSqlite("Data Source=db.db",b=>b.MigrationsAssembly("DdnsSharp")));
 
+builder.Services.AddAntDesign();
+
 builder.Services.AddCustomIOC();
 
 builder.Services.AddDdnsHostedService();

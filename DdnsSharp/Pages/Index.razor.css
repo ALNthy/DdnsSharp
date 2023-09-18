@@ -1,1 +1,38 @@
-﻿
+﻿.main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.main-center {
+    width: 50vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.main-center-row {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: #fcfcfc;
+    padding: 10px 10px 10px 10px;
+    margin: 10px 10px 10px 10px
+}
+.h2-sty {
+    margin-bottom:0px;
+}
+.main-center-row-i {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+.id-key {
+    height: 40px;
+    width: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

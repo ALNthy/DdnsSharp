@@ -1,10 +1,50 @@
 ﻿@page "/"
 
-
-
-
-
-@code{
-
-    
-}
+<div class="main">
+    <div class="main-center">
+        <div class="main-center-row">
+            <h2 class="h2-sty">服务商</h2>
+            <Divider />
+            <RadioGroup @bind-Value="ServiceName" Size="large">
+                @foreach (ServiceType i in Enum.GetValues(typeof(ServiceType)))
+                {
+                    <Radio RadioButton Value="i.ToString()">@i.ToString()</Radio>
+                }
+            </RadioGroup>
+            <Divider />
+            <div class="main-center-row-i">
+                <div class="id-key">
+                    <label>Id</label>
+                </div>
+                <Input Placeholder="Basic usage" Value="1"/>
+            </div>
+            <br />
+            <div class="main-center-row-i">
+                <div class="id-key">
+                    <label>Key</label>
+                </div>
+                <Input Placeholder="Basic usage" Value="1" />
+            </div>
+            <br />
+            <div class="main-center-row-i">
+                <div class="id-key">
+                    <label>TTL</label>
+                </div>
+                <Select TItem="Person"
+                        TItemValue="int?"
+                        DataSource="@_persons"
+                @bind-Value="@_selectedValue"
+                        LabelName="@nameof(Person.Name)"
+                        ValueName="@nameof(Person.Value)"
+                        Placeholder="Select a person"
+                        DefaultActiveFirstOption="false">
+                 </Select>
+            </div>
+        </div>
+        <div class="main-center-row">
+            <h2 class="h2-sty">IPV4</h2>
+            <Divider />
+        </div>
+@*         <div class="main-center-row"></div> *@
+    </div>
+</div>

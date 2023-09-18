@@ -23,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DdnsSharp.EFCore", "DdnsSha
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DdnsSharp.Core", "DdnsSharp.Core\DdnsSharp.Core.csproj", "{C9F07D6B-3539-4DA0-AB10-9AF809F2545D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DdnsSharp.HostedService", "DdnsSharp.HostedService\DdnsSharp.HostedService.csproj", "{1DFF15A2-911E-47A2-B34E-A1E6CE2A18F4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DdnsSharp.HostedService", "DdnsSharp.HostedService\DdnsSharp.HostedService.csproj", "{1DFF15A2-911E-47A2-B34E-A1E6CE2A18F4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
