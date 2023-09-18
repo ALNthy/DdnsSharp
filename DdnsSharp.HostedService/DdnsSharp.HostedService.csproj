@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <!--<Nullable>enable</Nullable>-->
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DdnsSharp.Core\DdnsSharp.Core.csproj" />
+    <ProjectReference Include="..\DdnsSharp.IServices\DdnsSharp.IServices.csproj" />
+    <ProjectReference Include="..\DdnsSharp.Services\DdnsSharp.Services.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,4 +1,5 @@
 using DdnsSharp.EFCore;
+using DdnsSharp.HostedService;
 using DdnsSharp.IRepository;
 using DdnsSharp.IServices;
 using DdnsSharp.Repository;
@@ -12,6 +13,8 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddDbContext<SqlDbContext>(x=>x.UseSqlite("Data Source=db.db",b=>b.MigrationsAssembly("DdnsSharp")));
 
 builder.Services.AddCustomIOC();
+
+builder.Services.AddDdnsHostedService();
 
 var app = builder.Build();
 
@@ -34,6 +37,12 @@ public static class IOCExtend
         services.AddScoped<IDdnsConfigRepository, DdnsConfigRepository>();
 
         services.AddScoped<IDdnsConfigService,DdnsConfigService>();
+        return services;
+    }
+
+    public static IServiceCollection AddDdnsHostedService(this IServiceCollection services)
+    {
+        services.AddHostedService<DdnsHostedService>();
         return services;
     }
 }

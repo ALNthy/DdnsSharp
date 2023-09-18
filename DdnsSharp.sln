@@ -21,7 +21,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DdnsSharp.Services", "DdnsS
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DdnsSharp.EFCore", "DdnsSharp.EFCore\DdnsSharp.EFCore.csproj", "{0F50599C-1352-48B6-9A06-44248ECE1840}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DdnsSharp.Core", "DdnsSharp.Core\DdnsSharp.Core.csproj", "{C9F07D6B-3539-4DA0-AB10-9AF809F2545D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DdnsSharp.Core", "DdnsSharp.Core\DdnsSharp.Core.csproj", "{C9F07D6B-3539-4DA0-AB10-9AF809F2545D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DdnsSharp.HostedService", "DdnsSharp.HostedService\DdnsSharp.HostedService.csproj", "{1DFF15A2-911E-47A2-B34E-A1E6CE2A18F4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -61,6 +63,10 @@ Global
 		{C9F07D6B-3539-4DA0-AB10-9AF809F2545D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C9F07D6B-3539-4DA0-AB10-9AF809F2545D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C9F07D6B-3539-4DA0-AB10-9AF809F2545D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1DFF15A2-911E-47A2-B34E-A1E6CE2A18F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1DFF15A2-911E-47A2-B34E-A1E6CE2A18F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1DFF15A2-911E-47A2-B34E-A1E6CE2A18F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1DFF15A2-911E-47A2-B34E-A1E6CE2A18F4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
