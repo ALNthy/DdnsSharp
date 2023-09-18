@@ -362,3 +362,5 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 *.db
+/DdnsSharp/db.db-shm
+/DdnsSharp/db.db-wal
