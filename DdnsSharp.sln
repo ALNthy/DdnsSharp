@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33815.320
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DdnsSharp", "DdnsSharp\DdnsSharp.csproj", "{6F79B9B7-30D6-4864-9D23-5E83AE322DD0}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DdnsSharp.Model", "DdnsSharp.Model\DdnsSharp.Model.csproj", "{5C21DB36-D0E8-4013-B6F9-79D6E51B644A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Repository", "Repository", "{C3C1FF9C-4DED-479D-9C7D-DB1B9ACF08AB}"
@@ -25,16 +23,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DdnsSharp.Core", "DdnsSharp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DdnsSharp.HostedService", "DdnsSharp.HostedService\DdnsSharp.HostedService.csproj", "{1DFF15A2-911E-47A2-B34E-A1E6CE2A18F4}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DdnsSharp", "DdnsSharp\DdnsSharp.csproj", "{C404FE5A-DC0D-43B5-892B-C21DA5033A45}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{6F79B9B7-30D6-4864-9D23-5E83AE322DD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6F79B9B7-30D6-4864-9D23-5E83AE322DD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6F79B9B7-30D6-4864-9D23-5E83AE322DD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6F79B9B7-30D6-4864-9D23-5E83AE322DD0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5C21DB36-D0E8-4013-B6F9-79D6E51B644A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5C21DB36-D0E8-4013-B6F9-79D6E51B644A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5C21DB36-D0E8-4013-B6F9-79D6E51B644A}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -67,6 +63,10 @@ Global
 		{1DFF15A2-911E-47A2-B34E-A1E6CE2A18F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1DFF15A2-911E-47A2-B34E-A1E6CE2A18F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1DFF15A2-911E-47A2-B34E-A1E6CE2A18F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C404FE5A-DC0D-43B5-892B-C21DA5033A45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C404FE5A-DC0D-43B5-892B-C21DA5033A45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C404FE5A-DC0D-43B5-892B-C21DA5033A45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C404FE5A-DC0D-43B5-892B-C21DA5033A45}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

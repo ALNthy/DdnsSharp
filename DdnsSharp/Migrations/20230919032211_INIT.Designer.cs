@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DdnsSharp.Migrations
 {
     [DbContext(typeof(SqlDbContext))]
-    [Migration("20230918043051_INIT")]
+    [Migration("20230919032211_INIT")]
     partial class INIT
     {
         /// <inheritdoc />
@@ -37,6 +37,12 @@ namespace DdnsSharp.Migrations
 
                     b.Property<string>("Key")
                         .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("ServiceName")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Guid");
 

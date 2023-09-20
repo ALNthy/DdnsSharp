@@ -12,6 +12,8 @@ namespace DdnsSharp.Pages
         IDdnsConfigService DdnsConfigService { get; set; }
 
         string ServiceName = ServiceType.DnsPod.ToString();
+
+        string getType = Model.GetType.NetInterface.ToString();
         class Person
         {
             public int? Value { get; set; }
@@ -24,17 +26,21 @@ namespace DdnsSharp.Pages
         protected override async Task OnInitializedAsync()
         {
             _persons = new List<Person>
-        {
-            new Person { Value = null, Name = "自动" },
-            new Person { Value = 1, Name = "1秒" },
-            new Person { Value = 5 , Name = "5秒" },
-            new Person { Value = 10 , Name = "10秒" },
-            new Person { Value = 60 , Name = "1分钟" },
-            new Person { Value = 120 , Name = "2分钟" },
-            new Person { Value = 600 , Name = "10分钟" },
-            new Person { Value = 1800 , Name = "30分钟" },
-            new Person { Value = 3600 , Name = "1小时" },
-        };
+            {
+                new Person { Value = null, Name = "自动" },
+                new Person { Value = 1, Name = "1秒" },
+                new Person { Value = 5 , Name = "5秒" },
+                new Person { Value = 10 , Name = "10秒" },
+                new Person { Value = 60 , Name = "1分钟" },
+                new Person { Value = 120 , Name = "2分钟" },
+                new Person { Value = 600 , Name = "10分钟" },
+                new Person { Value = 1800 , Name = "30分钟" },
+                new Person { Value = 3600 , Name = "1小时" }
+            };
+            await DdnsConfigService.FindAllAsync();
         }
+
+        DdnsConfig ddnsConfig = new() { Guid = Guid.NewGuid(), IPV4 = new(), IPV6 = new() };
+
     }
 }

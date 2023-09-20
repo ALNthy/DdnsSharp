@@ -1,33 +1,33 @@
 ﻿@page "/"
 
-<div class="main">
+<div class="main" @onclick="()=>{Console.WriteLine(value); }">
     <div class="main-center">
         <div class="main-center-row">
             <h2 class="h2-sty">服务商</h2>
             <Divider />
-            <RadioGroup @bind-Value="ServiceName" Size="large">
+            <RadioGroup Size="large" ButtonStyle="@RadioButtonStyle.Solid" TValue="ServiceType">
                 @foreach (ServiceType i in Enum.GetValues(typeof(ServiceType)))
                 {
-                    <Radio RadioButton Value="i.ToString()">@i.ToString()</Radio>
+                    <Radio RadioButton Value="i">@i.ToString()</Radio>
                 }
             </RadioGroup>
             <Divider />
             <div class="main-center-row-i">
-                <div class="id-key">
+                <div class="row">
                     <label>Id</label>
                 </div>
                 <Input Placeholder="Basic usage" Value="1"/>
             </div>
             <br />
             <div class="main-center-row-i">
-                <div class="id-key">
+                <div class="row">
                     <label>Key</label>
                 </div>
                 <Input Placeholder="Basic usage" Value="1" />
             </div>
             <br />
             <div class="main-center-row-i">
-                <div class="id-key">
+                <div class="row">
                     <label>TTL</label>
                 </div>
                 <Select TItem="Person"
@@ -44,7 +44,109 @@
         <div class="main-center-row">
             <h2 class="h2-sty">IPV4</h2>
             <Divider />
+            <div class="main-center-row-i">
+                <div class="row">
+                    <label>是否启用</label>
+                </div>
+                <Switch Checked="true" CheckedChildren="启用" UnCheckedChildren="关闭" />
+            </div>
+            <br />
+            <div class="main-center-row-i">
+                <div class="row">
+                    <label>获取ip方式</label>
+                </div>
+                <div style="width:100%;padding-left:11px;">
+                    <RadioGroup ButtonStyle="@RadioButtonStyle.Solid" TValue="GetType">
+                        @foreach (GetType i in Enum.GetValues(typeof(GetType)))
+                        {
+                            <Radio RadioButton Value="i">@i.ToString()</Radio>
+                        }
+                    </RadioGroup>
+                    <br />
+                     <TreeSelect TItem="string"
+                     @bind-Value="value"
+                                 Placeholder="Please select"
+                                                    AllowClear
+                                                    TreeDefaultExpandAll Style="margin-top:10px; width:100%">
+                        @foreach (var i in Utils.GetNetworkIp().Ipv4)
+                        {
+                            @foreach (var ii in i)
+                            {
+                                @foreach (var iii in ii.Value)
+                                {
+                                    <TreeNode TItem="string" Key=@($"{ii.Key}-{ii.Value.IndexOf(iii)}") Title=@($"{ii.Key}({iii})") />
+                                }
+                            }
+                        }
+                    </TreeSelect>
+                </div>
+            </div>
+            <br />
+             <div class="main-center-row-i">
+                 <div class="row">
+                     <label>Domains</label>
+                 </div>
+                 <TextArea Style="width:100%"/>
+             </div>
         </div>
-@*         <div class="main-center-row"></div> *@
+        <div class="main-center-row">
+            <h2 class="h2-sty">IPV6</h2>
+            <Divider />
+            <div class="main-center-row-i">
+                <div class="row">
+                    <label>是否启用</label>
+                </div>
+                <Switch Checked="true" CheckedChildren="启用" UnCheckedChildren="关闭" />
+            </div>
+            <br />
+            <div class="main-center-row-i">
+                <div class="row">
+                    <label>获取ip方式</label>
+                </div>
+                <div style="width:100%;padding-left:11px;">
+                    <RadioGroup ButtonStyle="@RadioButtonStyle.Solid" TValue="GetType">
+                        @foreach (GetType i in Enum.GetValues(typeof(GetType)))
+                    {
+                        <Radio RadioButton Value="i">@i.ToString()</Radio>
+                    }
+                    </RadioGroup>
+                    <br />
+                    <RadioGroup @bind-Value="ss" TValue="Test">
+                        @foreach (var i in Utils.GetNetworkIp().Ipv6)
+                        {
+                            @foreach (var ii in i)
+                            {
+                                @foreach (var iii in ii.Value)
+                                {
+                                    <Radio TValue=Test Value="new(){name = ii.Key,r = (byte)ii.Value.IndexOf(iii)}">@($"{ii.Key}({iii})")</Radio>
+                                }
+                            }
+                        }
+                    </RadioGroup>
+                </div>
+            </div>
+            <br />
+            <div class="main-center-row-i">
+                <div class="row">
+                    <label>Domains</label>
+                </div>
+                <TextArea Style="width:100%" />
+            </div>
+        </div>
     </div>
 </div>
+
+@code {
+    private string value = "以太网-0";
+
+    class Test
+    {
+        public string name { get; set; }
+
+        public byte r { get; set; }
+
+    }
+
+    Test ss = new() { name="1",r = 1 };
+
+}

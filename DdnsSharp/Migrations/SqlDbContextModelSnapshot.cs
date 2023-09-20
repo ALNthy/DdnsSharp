@@ -35,6 +35,12 @@ namespace DdnsSharp.Migrations
                     b.Property<string>("Key")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("ServiceName")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("Guid");
 
                     b.HasIndex("IPV4Guid");

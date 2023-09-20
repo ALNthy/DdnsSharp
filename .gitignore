@@ -364,3 +364,5 @@ FodyWeavers.xsd
 *.db
 /DdnsSharp/db.db-shm
 /DdnsSharp/db.db-wal
+/DdnsSharp/db.db-wal
+/DdnsSharp/db.db-shm

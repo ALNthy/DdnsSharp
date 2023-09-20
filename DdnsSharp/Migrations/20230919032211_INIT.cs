@@ -32,6 +32,8 @@ namespace DdnsSharp.Migrations
                 columns: table => new
                 {
                     Guid = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", nullable: true),
+                    ServiceName = table.Column<int>(type: "INTEGER", nullable: false),
                     Id = table.Column<string>(type: "TEXT", nullable: true),
                     Key = table.Column<string>(type: "TEXT", nullable: true),
                     IPV4Guid = table.Column<Guid>(type: "TEXT", nullable: true),
