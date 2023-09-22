@@ -8,11 +8,15 @@ namespace DdnsSharp.Model
 {
     public class NetworkConfig
     {
-        public Guid Guid { get; set; }
+        public Guid Guid { get; init; } =Guid.NewGuid();
         public bool Enable { get; set; }
         public GetType Type { get; set; }
-        public string Netinterface { get; set; }
-        public byte IpReg { get; set; }
-        public string[] Domains { get; set; }
+        public Netinterface Netinterface { get; set; }
+        public string Domains { get; set; }
+
+        public string[] GetDomains()
+        {
+            return Domains.Split("\n");
+        }
     }
 }

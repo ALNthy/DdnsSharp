@@ -17,11 +17,6 @@ namespace DdnsSharp.EFCore.Configs
         {
             builder.ToTable($"T_{nameof(NetworkConfig)}s");
             builder.HasKey(x => x.Guid);
-            builder.Property(x => x.Domains).HasConversion(v => JsonSerializer.Serialize(v, (JsonSerializerOptions)null),
-        v => JsonSerializer.Deserialize<string[]>(v, (JsonSerializerOptions)null), new ValueComparer<string[]>(
-            (c1, c2) => c1.SequenceEqual(c2),
-            c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
-            c =>c));
         }
     }
 }

@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DdnsSharp.Migrations
 {
     [DbContext(typeof(SqlDbContext))]
-    [Migration("20230919032211_INIT")]
+    [Migration("20230922065743_INIT")]
     partial class INIT
     {
         /// <inheritdoc />
@@ -44,6 +44,9 @@ namespace DdnsSharp.Migrations
                     b.Property<int>("ServiceName")
                         .HasColumnType("INTEGER");
 
+                    b.Property<uint?>("Ttl")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("Guid");
 
                     b.HasIndex("IPV4Guid");
@@ -51,6 +54,23 @@ namespace DdnsSharp.Migrations
                     b.HasIndex("IPV6Guid");
 
                     b.ToTable("T_DdnsConfigs", (string)null);
+                });
+
+            modelBuilder.Entity("DdnsSharp.Model.Netinterface", b =>
+                {
+                    b.Property<Guid>("Guid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<byte>("Index")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Guid");
+
+                    b.ToTable("T_Netinterfaces", (string)null);
                 });
 
             modelBuilder.Entity("DdnsSharp.Model.NetworkConfig", b =>
@@ -65,16 +85,15 @@ namespace DdnsSharp.Migrations
                     b.Property<bool>("Enable")
                         .HasColumnType("INTEGER");
 
-                    b.Property<byte>("IpReg")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Netinterface")
+                    b.Property<Guid?>("NetinterfaceGuid")
                         .HasColumnType("TEXT");
 
                     b.Property<int>("Type")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Guid");
+
+                    b.HasIndex("NetinterfaceGuid");
 
                     b.ToTable("T_NetworkConfigs", (string)null);
                 });
@@ -92,6 +111,15 @@ namespace DdnsSharp.Migrations
                     b.Navigation("IPV4");
 
                     b.Navigation("IPV6");
+                });
+
+            modelBuilder.Entity("DdnsSharp.Model.NetworkConfig", b =>
+                {
+                    b.HasOne("DdnsSharp.Model.Netinterface", "Netinterface")
+                        .WithMany()
+                        .HasForeignKey("NetinterfaceGuid");
+
+                    b.Navigation("Netinterface");
                 });
 #pragma warning restore 612, 618
         }

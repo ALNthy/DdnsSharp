@@ -9,5 +9,6 @@
         public string Key { get; set; }
         public NetworkConfig IPV4 { get; set; }
         public NetworkConfig IPV6 { get; set; }
+        public uint? Ttl { get; set; }
     }
 }
