@@ -16,5 +16,10 @@ namespace DdnsSharp.Services
         { 
             _service = service;
         }
+
+        public async Task<bool> FindAnyAsync(Guid id)
+        {
+            return await _service.FindAnyAsync(x=>x.Guid == id);
+        }
     }
 }

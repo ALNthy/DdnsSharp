@@ -1,7 +1,18 @@
 ﻿@page "/"
 
-<div class="main">
+<div class="main" @onclick="Test">
     <div class="main-center">
+        <div class="main-center-row">
+            <div class="menu">
+                <div>
+                    <Button Type="@ButtonType.Primary" @onclick="SaveAsync">Save</Button>
+                </div>
+                <div class="menu-i">
+                    <Button Type="@ButtonType.Primary">新增配置</Button>
+                    <Button Danger Type="@ButtonType.Primary">删除配置</Button>
+                </div>
+            </div>
+        </div>
         <div class="main-center-row">
             <h2 class="h2-sty">服务商</h2>
             <Divider />
@@ -74,8 +85,7 @@
                             DataSource="@V4netinterfaceDatas"
                     @bind-Value="ddnsConfig.IPV4.Netinterface"
                             LabelName="@nameof(NetinterfaceData.Name)"
-                            ValueName="@nameof(NetinterfaceData.Netinterface)"
-                            DefaultActiveFirstOption="false">
+                            ValueName="@nameof(NetinterfaceData.Netinterface)">
                     </Select>
                 </div>
             </div>
@@ -120,8 +130,7 @@
                             DataSource="@V6netinterfaceDatas"
                             @bind-Value="ddnsConfig.IPV6.Netinterface"
                             LabelName="@nameof(NetinterfaceData.Name)"
-                            ValueName="@nameof(NetinterfaceData.Netinterface)"
-                            DefaultActiveFirstOption="false">
+                            ValueName="@nameof(NetinterfaceData.Netinterface)">
                     </Select>
                 </div>
             </div>

@@ -51,5 +51,6 @@ namespace DdnsSharp.IServices
         /// <param name="del"></param>
         /// <returns></returns>
         public Task<TEntity> FindOneAsync(Expression<Func<TEntity, bool>> del);
+        public Task<bool> FindAnyAsync(Expression<Func<TEntity, bool>> del);
     }
 }

@@ -17,6 +17,9 @@ namespace DdnsSharp.EFCore.Configs
         {
             builder.ToTable($"T_{nameof(NetworkConfig)}s");
             builder.HasKey(x => x.Guid);
+            builder.Property(x => x.Netinterface).HasConversion<Netinterface>().HasConversion(
+        v => JsonSerializer.Serialize(v, (JsonSerializerOptions)null),
+        v => JsonSerializer.Deserialize<Netinterface>(v, (JsonSerializerOptions)null));
         }
     }
 }

@@ -12,10 +12,6 @@ namespace DdnsSharp.Pages
     {
         [Inject]
         IDdnsConfigService DdnsConfigService { get; set; }
-
-        string ServiceName = ServiceType.DnsPod.ToString();
-
-        string getType = Model.GetType.NetInterface.ToString();
         class TTL
         {
             public int? Value { get; set; }
@@ -23,12 +19,12 @@ namespace DdnsSharp.Pages
         }
 
         List<TTL> _ttl;
-        int? _selectedValue = null;
-
         List<NetinterfaceData> V6netinterfaceDatas;
         List<NetinterfaceData> V4netinterfaceDatas;
 
-        protected override async Task OnInitializedAsync()
+        List<DdnsConfig> configs;
+        DdnsConfig ddnsConfig = new();
+        protected override async Task OnParametersSetAsync()
         {
             _ttl = new List<TTL>
             {
@@ -44,13 +40,65 @@ namespace DdnsSharp.Pages
             };
             V6netinterfaceDatas = Utils.V6NetinterfaceDatas().ToList();
             V4netinterfaceDatas = Utils.V4NetinterfaceDatas().ToList();
-            var DdnsConfigs = await DdnsConfigService.FindAllAsync();
-            if (DdnsConfigs != null && DdnsConfigs.Count > 0)
+
+            configs = await DdnsConfigService.FindAllAsync();
+            if (configs!=null&&configs.Any()) 
             {
-                await Console.Out.WriteLineAsync("12312312");
+                ddnsConfig = configs[0];
+                await Console.Out.WriteLineAsync(JsonSerializer.Serialize(ddnsConfig));
+                await Console.Out.WriteLineAsync(JsonSerializer.Serialize(ddnsConfig.IPV6.Netinterface));
+
+                // 保证IP select 正常加载
+                foreach (var i in V4netinterfaceDatas)
+                {
+                    if (i.Netinterface.Name == ddnsConfig.IPV4.Netinterface.Name && i.Netinterface.Index == ddnsConfig.IPV4.Netinterface.Index)
+                    {
+                        ddnsConfig.IPV4.Netinterface = i.Netinterface;
+                    }
+                }
+                foreach (var i in V6netinterfaceDatas)
+                {
+                    if (i.Netinterface.Name == ddnsConfig.IPV6.Netinterface.Name && i.Netinterface.Index == ddnsConfig.IPV6.Netinterface.Index)
+                    {
+                        ddnsConfig.IPV6.Netinterface = i.Netinterface;
+                    }
+                }
+            }
+            else 
+            {
+                ddnsConfig = new()
+                {
+                    Guid = Guid.NewGuid(),
+                    IPV4 = new() { Netinterface = V4netinterfaceDatas[0].Netinterface },
+                    IPV6 = new() { Netinterface = V6netinterfaceDatas[0].Netinterface }
+                };
             }
         }
-        DdnsConfig ddnsConfig = new() { Guid = Guid.NewGuid(), IPV4 = new(), IPV6 = new() };
+
+        async Task Test()
+        {
+            await Console.Out.WriteLineAsync(JsonSerializer.Serialize(ddnsConfig.IPV6.Netinterface));
+            await Task.Delay(0);
+        }
+        async Task SaveAsync()
+        {
+#if DEBUG
+            await Console.Out.WriteLineAsync(JsonSerializer.Serialize(ddnsConfig));
+#endif
+            if (await DdnsConfigService.FindAnyAsync(ddnsConfig.Guid))
+            {
+                bool update = await DdnsConfigService.UpdateAsync(ddnsConfig);
+                if (update) 
+                {
+                    
+                }
+            }
+            else 
+            {
+                await DdnsConfigService.CreateAsync(ddnsConfig);
+            }
+            
+        }
     }
 }
 

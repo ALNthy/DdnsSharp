@@ -9,5 +9,6 @@ namespace DdnsSharp.IServices
 {
     public interface IDdnsConfigService:IBaseService<DdnsConfig>
     {
+        public Task<bool> FindAnyAsync(Guid id);
     }
 }

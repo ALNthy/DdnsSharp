@@ -33,6 +33,11 @@ namespace DdnsSharp.Services
             return await _repository.FindAllAsync(del);
         }
 
+        public async Task<bool> FindAnyAsync(Expression<Func<TEntity, bool>> del)
+        {
+            return await _repository.FindAnyAsync(del);
+        }
+
         public async Task<TEntity> FindOneAsync(Guid id)
         {
             return await _repository.FindOneAsync(id);
@@ -43,9 +48,10 @@ namespace DdnsSharp.Services
             return await _repository.FindOneAsync(del);
         }
 
-        public Task<bool> UpdateAsync(TEntity entity)
+        public async Task<bool> UpdateAsync(TEntity entity)
         {
-            return _repository.UpdateAsync(entity);
+            return await _repository.UpdateAsync(entity);
         }
+        
     }
 }

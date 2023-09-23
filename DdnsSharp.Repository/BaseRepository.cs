@@ -36,6 +36,11 @@ namespace DdnsSharp.Repository
             return await _db.Set<TEntity>().Where(del).ToListAsync();
         }
 
+        public virtual async Task<bool> FindAnyAsync(Expression<Func<TEntity, bool>> del)
+        {
+            return await _db.Set<TEntity>().Where(del).AnyAsync();
+        }
+
         public virtual async Task<TEntity> FindOneAsync(Guid id)
         {
             return await _db.Set<TEntity>().FindAsync(id);

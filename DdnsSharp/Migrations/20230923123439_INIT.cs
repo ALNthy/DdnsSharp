@@ -12,36 +12,18 @@ namespace DdnsSharp.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "T_Netinterfaces",
-                columns: table => new
-                {
-                    Guid = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", nullable: true),
-                    Index = table.Column<byte>(type: "INTEGER", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_T_Netinterfaces", x => x.Guid);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "T_NetworkConfigs",
                 columns: table => new
                 {
                     Guid = table.Column<Guid>(type: "TEXT", nullable: false),
                     Enable = table.Column<bool>(type: "INTEGER", nullable: false),
                     Type = table.Column<int>(type: "INTEGER", nullable: false),
-                    NetinterfaceGuid = table.Column<Guid>(type: "TEXT", nullable: true),
+                    Netinterface = table.Column<string>(type: "TEXT", nullable: true),
                     Domains = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_T_NetworkConfigs", x => x.Guid);
-                    table.ForeignKey(
-                        name: "FK_T_NetworkConfigs_T_Netinterfaces_NetinterfaceGuid",
-                        column: x => x.NetinterfaceGuid,
-                        principalTable: "T_Netinterfaces",
-                        principalColumn: "Guid");
                 });
 
             migrationBuilder.CreateTable(
@@ -81,11 +63,6 @@ namespace DdnsSharp.Migrations
                 name: "IX_T_DdnsConfigs_IPV6Guid",
                 table: "T_DdnsConfigs",
                 column: "IPV6Guid");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_T_NetworkConfigs_NetinterfaceGuid",
-                table: "T_NetworkConfigs",
-                column: "NetinterfaceGuid");
         }
 
         /// <inheritdoc />
@@ -96,9 +73,6 @@ namespace DdnsSharp.Migrations
 
             migrationBuilder.DropTable(
                 name: "T_NetworkConfigs");
-
-            migrationBuilder.DropTable(
-                name: "T_Netinterfaces");
         }
     }
 }

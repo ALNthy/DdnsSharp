@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DdnsSharp.Migrations
 {
     [DbContext(typeof(SqlDbContext))]
-    [Migration("20230922065743_INIT")]
+    [Migration("20230923123439_INIT")]
     partial class INIT
     {
         /// <inheritdoc />
@@ -56,23 +56,6 @@ namespace DdnsSharp.Migrations
                     b.ToTable("T_DdnsConfigs", (string)null);
                 });
 
-            modelBuilder.Entity("DdnsSharp.Model.Netinterface", b =>
-                {
-                    b.Property<Guid>("Guid")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
-
-                    b.Property<byte>("Index")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Guid");
-
-                    b.ToTable("T_Netinterfaces", (string)null);
-                });
-
             modelBuilder.Entity("DdnsSharp.Model.NetworkConfig", b =>
                 {
                     b.Property<Guid>("Guid")
@@ -85,15 +68,13 @@ namespace DdnsSharp.Migrations
                     b.Property<bool>("Enable")
                         .HasColumnType("INTEGER");
 
-                    b.Property<Guid?>("NetinterfaceGuid")
+                    b.Property<string>("Netinterface")
                         .HasColumnType("TEXT");
 
                     b.Property<int>("Type")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Guid");
-
-                    b.HasIndex("NetinterfaceGuid");
 
                     b.ToTable("T_NetworkConfigs", (string)null);
                 });
@@ -111,15 +92,6 @@ namespace DdnsSharp.Migrations
                     b.Navigation("IPV4");
 
                     b.Navigation("IPV6");
-                });
-
-            modelBuilder.Entity("DdnsSharp.Model.NetworkConfig", b =>
-                {
-                    b.HasOne("DdnsSharp.Model.Netinterface", "Netinterface")
-                        .WithMany()
-                        .HasForeignKey("NetinterfaceGuid");
-
-                    b.Navigation("Netinterface");
                 });
 #pragma warning restore 612, 618
         }

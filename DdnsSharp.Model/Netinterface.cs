@@ -14,7 +14,6 @@ namespace DdnsSharp.Model
             Name = name;
             Index = index;
         }
-        public Guid Guid { get; init; } = Guid.NewGuid();
         public string Name { get; set; }
         public byte Index { get; set; }
     }

@@ -61,6 +61,7 @@ namespace DdnsSharp.Core
                 {
                     foreach (var iii in ii.Value)
                     {
+                        //yield return new NetinterfaceData() { Name = $"{ii.Key}({iii})", Netinterface = (ii.Key, (byte)ii.Value.IndexOf(iii)) };
                         yield return new NetinterfaceData() { Name = $"{ii.Key}({iii})", Netinterface = new(ii.Key, (byte)ii.Value.IndexOf(iii)) };
                     }
                 }

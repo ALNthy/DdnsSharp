@@ -56,5 +56,11 @@ namespace DdnsSharp.IRepository
         /// <param name="del"></param>
         /// <returns></returns>
         public Task<TEntity> FindOneAsync(Expression<Func<TEntity, bool>> del);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="del"></param>
+        /// <returns></returns>
+        public Task<bool> FindAnyAsync(Expression<Func<TEntity, bool>> del);
     }
 }
