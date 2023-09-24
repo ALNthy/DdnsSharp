@@ -1,9 +1,12 @@
-﻿using DdnsSharp.Core;
+﻿using AntDesign;
+using DdnsSharp.Core;
 using DdnsSharp.Core.DdnsClient;
 using DdnsSharp.Core.Model;
 using DdnsSharp.IServices;
 using DdnsSharp.Model;
+using DdnsSharp.SignalR;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.SignalR.Client;
 using System.Text.Json;
 
 namespace DdnsSharp.Pages
@@ -12,6 +15,13 @@ namespace DdnsSharp.Pages
     {
         [Inject]
         IDdnsConfigService DdnsConfigService { get; set; }
+        [Inject]
+        IMessageService _message {  get; set; }
+        [Inject]
+        NavigationManager navigationManager { get; set; }
+
+        private HubConnection _hubConnection;
+
         class TTL
         {
             public int? Value { get; set; }
@@ -73,6 +83,11 @@ namespace DdnsSharp.Pages
                     IPV6 = new() { Netinterface = V6netinterfaceDatas[0].Netinterface }
                 };
             }
+            string baseUrl = navigationManager.BaseUri;
+            var _hubUrl = baseUrl.TrimEnd('/') + DdnsHub.HubUrl;
+            _hubConnection = new HubConnectionBuilder().WithUrl(_hubUrl).Build();
+            await _hubConnection.StartAsync();
+            _hubConnection.On<string>("DdnsMessage", Console.Out.WriteLineAsync);
         }
 
         async Task Test()
