@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DdnsSharp.Migrations
 {
     [DbContext(typeof(SqlDbContext))]
-    [Migration("20230923123439_INIT")]
+    [Migration("20230925100900_INIT")]
     partial class INIT
     {
         /// <inheritdoc />
@@ -25,6 +25,9 @@ namespace DdnsSharp.Migrations
                     b.Property<Guid>("Guid")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
+
+                    b.Property<bool>("Enable")
+                        .HasColumnType("INTEGER");
 
                     b.Property<Guid?>("IPV4Guid")
                         .HasColumnType("TEXT");
@@ -73,6 +76,9 @@ namespace DdnsSharp.Migrations
 
                     b.Property<int>("Type")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Guid");
 

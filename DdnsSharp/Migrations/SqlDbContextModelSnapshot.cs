@@ -23,6 +23,9 @@ namespace DdnsSharp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("Enable")
+                        .HasColumnType("INTEGER");
+
                     b.Property<Guid?>("IPV4Guid")
                         .HasColumnType("TEXT");
 
@@ -70,6 +73,9 @@ namespace DdnsSharp.Migrations
 
                     b.Property<int>("Type")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Guid");
 

@@ -10,7 +10,9 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
+
 builder.Services.AddSignalR();
+
 builder.Services.AddDbContext<SqlDbContext>(x=>x.UseSqlite("Data Source=db.db",b=>b.MigrationsAssembly("DdnsSharp")));
 
 builder.Services.AddAntDesign();
@@ -27,7 +29,9 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.MapBlazorHub();
+
 app.MapHub<DdnsHub>(DdnsHub.HubUrl);
+
 app.MapFallbackToPage("/_Host");
 
 app.Run();

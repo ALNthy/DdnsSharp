@@ -25,7 +25,7 @@ namespace DdnsSharp.Repository
         }
         public override async Task<List<DdnsConfig>> FindAllAsync()
         {
-            return await _dbContext.ddnsConfigs.Include(x => x.IPV4).Include(x => x.IPV6).ToListAsync();
+            return await this.FindAllAsync(x=>x.Enable);
         }
         public override async Task<DdnsConfig> FindOneAsync(Expression<Func<DdnsConfig, bool>> del)
         {
@@ -35,6 +35,10 @@ namespace DdnsSharp.Repository
         {
             return await this.FindOneAsync(x=>x.Guid==id);
         }
-
+        public override async Task<bool> DeletedAsync(DdnsConfig entity)
+        {   
+            entity.Enable = false;
+            return await base.DeletedAsync(entity);
+        }
     }
 }

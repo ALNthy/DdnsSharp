@@ -19,6 +19,7 @@ namespace DdnsSharp.Migrations
                     Enable = table.Column<bool>(type: "INTEGER", nullable: false),
                     Type = table.Column<int>(type: "INTEGER", nullable: false),
                     Netinterface = table.Column<string>(type: "TEXT", nullable: true),
+                    Url = table.Column<string>(type: "TEXT", nullable: true),
                     Domains = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
@@ -31,6 +32,7 @@ namespace DdnsSharp.Migrations
                 columns: table => new
                 {
                     Guid = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Enable = table.Column<bool>(type: "INTEGER", nullable: false),
                     Name = table.Column<string>(type: "TEXT", nullable: true),
                     ServiceName = table.Column<int>(type: "INTEGER", nullable: false),
                     Id = table.Column<string>(type: "TEXT", nullable: true),

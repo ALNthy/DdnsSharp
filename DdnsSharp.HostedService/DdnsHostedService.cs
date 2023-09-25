@@ -1,5 +1,4 @@
 ﻿using DdnsSharp.IServices;
-using DdnsSharp.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using DdnsSharp.SignalR;
@@ -7,26 +6,24 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace DdnsSharp.HostedService
 {
-    public class DdnsHostedService : BackgroundService
+    public class DdnsHostedService : BackgroundService, IAsyncDisposable
     {
         private readonly IServiceScopeFactory _serviceScope;
+
+        Timer timer;
 
         public DdnsHostedService(IServiceScopeFactory serviceScope)
         {
             _serviceScope = serviceScope;
         }
 
-
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            while (true)
+            timer = new Timer(async (s) =>
             {
-                _ = Task.Run(async () =>
-                {
-                    await WokrAsync(stoppingToken);
-                }, stoppingToken);
-                await Task.Delay(30000);
-            }
+                await WokrAsync(stoppingToken);
+            }, null, TimeSpan.Zero, TimeSpan.FromSeconds(10));
+            await Task.Delay(0,stoppingToken);
         }
 
         private async Task WokrAsync(CancellationToken cancellationToken)
@@ -37,8 +34,15 @@ namespace DdnsSharp.HostedService
                 IHubContext<DdnsHub> hubContext = scope.ServiceProvider.GetService<IHubContext<DdnsHub>>();
                 await _ddnsConfigService.FindAllAsync();
                 await hubContext.Clients.All.SendAsync("DdnsMessage", "测试内容",cancellationToken);
-                await Task.Delay(0,cancellationToken);
             };
+        }
+
+        public async ValueTask DisposeAsync()
+        {
+            if (timer is not null)
+            {
+                await timer.DisposeAsync();
+            }
         }
     }
 }

@@ -4,6 +4,11 @@ namespace DdnsSharp.SignalR
     public class DdnsHub:Hub
     {
         public const string HubUrl = "/ddnschat";
+
+        public async Task DdnsMessage(string message)
+        {
+            await Clients.All.SendAsync("DdnsMessage", message);
+        }
         public override async Task OnConnectedAsync()
         {
             Console.WriteLine($"{Context.ConnectionId} connected");

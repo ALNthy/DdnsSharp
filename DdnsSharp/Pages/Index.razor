@@ -1,6 +1,8 @@
 ﻿@page "/"
+@implements IAsyncDisposable
 
-<div class="main" @onclick="Test">
+
+<div class="main">
     <div class="main-center">
         <div class="main-center-row">
             <div class="menu">
@@ -8,15 +10,31 @@
                     <Button Type="@ButtonType.Primary" @onclick="SaveAsync">Save</Button>
                 </div>
                 <div class="menu-i">
-                    <Button Type="@ButtonType.Primary">新增配置</Button>
-                    <Button Danger Type="@ButtonType.Primary">删除配置</Button>
+                    <Select TItem="SelectDdnsConfig"
+                            TItemValue="DdnsConfig"
+                            DataSource="@selectDdnsConfigs"
+                    @bind-Value="ddnsConfig"
+                            LabelName="@nameof(SelectDdnsConfig.Name)"
+                            ValueName="@nameof(SelectDdnsConfig.Value)">
+                    </Select>
+                    <Button Type="@ButtonType.Primary" @onclick="AddSelectDdnsConfig">新增配置</Button>
+                    <Button Danger Type="@ButtonType.Primary" @onclick="DeleteDdnsConfig">删除配置</Button>
                 </div>
             </div>
         </div>
         <div class="main-center-row">
             <h2 class="h2-sty">服务商</h2>
             <Divider />
-            <RadioGroup Size="large" ButtonStyle="@RadioButtonStyle.Solid" TValue="ServiceType" @bind-Value="ddnsConfig.ServiceName">
+            <RadioGroup Size="large" ButtonStyle="@RadioButtonStyle.Solid" TValue="ServiceType" @bind-Value="ddnsConfig.ServiceName"
+                         OnChange="@(
+                    async()=>{
+                    var selectddnsconfig = selectDdnsConfigs.Find(x=>x.Name==ddnsConfig.Name);
+                    int index = selectDdnsConfigs.IndexOf(selectddnsconfig);
+                    string[] Names = ddnsConfig.Name.Split("-");
+                    Names[0] = ddnsConfig.ServiceName.ToString();
+                    ddnsConfig.Name = string.Join("-",Names);
+                    selectDdnsConfigs[index] = new(){Name = ddnsConfig.Name,Value=ddnsConfig};
+                    })">
                 @foreach (ServiceType i in Enum.GetValues(typeof(ServiceType)))
                 {
                     <Radio RadioButton Value="i">@i.ToString()</Radio>
@@ -47,7 +65,6 @@
                 @bind-Value="ddnsConfig.Ttl"
                         LabelName="@nameof(TTL.Name)"
                         ValueName="@nameof(TTL.Value)"
-                        Placeholder="Select a person"
                         DefaultActiveFirstOption="false">
                  </Select>
             </div>
@@ -79,22 +96,29 @@
             <div class="main-center-row-i">
                 <div class="row">
                 </div>
-                <div style="width:100%;padding-left:11px;">
-                    <Select TItem="NetinterfaceData"
-                            TItemValue="Netinterface"
-                            DataSource="@V4netinterfaceDatas"
-                    @bind-Value="ddnsConfig.IPV4.Netinterface"
-                            LabelName="@nameof(NetinterfaceData.Name)"
-                            ValueName="@nameof(NetinterfaceData.Netinterface)">
-                    </Select>
-                </div>
+                @if (ddnsConfig.IPV4.Type == DdnsSharp.Model.GetType.NetInterface)
+                {
+                    <div style="width:100%;padding-left:11px;">
+                        <Select TItem="NetinterfaceData"
+                                TItemValue="Netinterface"
+                                DataSource="@V4netinterfaceDatas"
+                        @bind-Value="ddnsConfig.IPV4.Netinterface"
+                                LabelName="@nameof(NetinterfaceData.Name)"
+                                ValueName="@nameof(NetinterfaceData.Netinterface)">
+                        </Select>
+                    </div>
+                }
+                else
+                {
+                    <Input @bind-Value="ddnsConfig.IPV4.Url" Style="width:100%;margin-left:11px;" />
+                }
             </div>
             <br />
              <div class="main-center-row-i">
                  <div class="row">
                      <label>Domains</label>
                  </div>
-                <TextArea @bind-Value="ddnsConfig.IPV4.Domains" Style="width:100%"/>
+                <TextArea @bind-Value="ddnsConfig.IPV4.Domains" Style="width:100%;margin-left:11px;" />
              </div>
         </div>
         <div class="main-center-row">
@@ -124,22 +148,28 @@
             <div class="main-center-row-i">
                 <div class="row">
                 </div>
-                <div style="width:100%;padding-left:11px;">
-                    <Select TItem="NetinterfaceData"
-                            TItemValue="Netinterface"
-                            DataSource="@V6netinterfaceDatas"
-                            @bind-Value="ddnsConfig.IPV6.Netinterface"
-                            LabelName="@nameof(NetinterfaceData.Name)"
-                            ValueName="@nameof(NetinterfaceData.Netinterface)">
-                    </Select>
-                </div>
+                @if (ddnsConfig.IPV6.Type == DdnsSharp.Model.GetType.NetInterface)
+                {
+                    <div style="width:100%;padding-left:11px;">
+                        <Select TItem="NetinterfaceData"
+                                TItemValue="Netinterface"
+                                DataSource="@V6netinterfaceDatas"
+                        @bind-Value="ddnsConfig.IPV6.Netinterface"
+                                LabelName="@nameof(NetinterfaceData.Name)"
+                                ValueName="@nameof(NetinterfaceData.Netinterface)">
+                        </Select>
+                    </div>
+                }else
+                {
+                    <Input @bind-Value="ddnsConfig.IPV6.Url" Style="width:100%;margin-left:11px;" />
+                }
             </div>
             <br />
             <div class="main-center-row-i">
                 <div class="row">
                     <label>Domains</label>
                 </div>
-                <TextArea Style="width:100%" Value="@ddnsConfig.IPV6.Domains"/>
+                <TextArea Style="width:100%;margin-left:11px;" @bind-Value="@ddnsConfig.IPV6.Domains" />
             </div>
         </div>
     </div>

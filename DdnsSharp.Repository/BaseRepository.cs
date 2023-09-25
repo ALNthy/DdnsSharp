@@ -21,7 +21,7 @@ namespace DdnsSharp.Repository
             return await _db.SaveChangesAsync() > 0;
         }
 
-        public async Task<bool> DeletedAsync(TEntity entity)
+        public virtual async Task<bool> DeletedAsync(TEntity entity)
         {
             return await UpdateAsync(entity);
         }
