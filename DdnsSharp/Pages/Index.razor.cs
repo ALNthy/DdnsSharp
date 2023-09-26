@@ -40,7 +40,7 @@ namespace DdnsSharp.Pages
         List<NetinterfaceData> V4netinterfaceDatas;
 
         List<DdnsConfig> configs;
-        List<SelectDdnsConfig> selectDdnsConfigs;
+        List<SelectDdnsConfig> selectDdnsConfigs = new();
         DdnsConfig ddnsConfig = new();
 
         protected override async Task OnParametersSetAsync()
@@ -60,7 +60,7 @@ namespace DdnsSharp.Pages
             V6netinterfaceDatas = Utils.V6NetinterfaceDatas().ToList();
             V4netinterfaceDatas = Utils.V4NetinterfaceDatas().ToList();
 
-            configs = await DdnsConfigService.FindAllAsync();
+            configs = await DdnsConfigService.FindAllAsync(x=>x.Enable);
 
             if (configs is not null)
             {
@@ -92,7 +92,7 @@ namespace DdnsSharp.Pages
             else 
             {
                 ddnsConfig = GetNewDdnsConfig();
-                selectDdnsConfigs.Add(new() { Name = ddnsConfig.Name, Value = ddnsConfig });
+                selectDdnsConfigs.Add(new() { Name = $"{ddnsConfig.Name}-(未保存)", Value = ddnsConfig });
             }
             string baseUrl = navigationManager.BaseUri;
             var _hubUrl = baseUrl.TrimEnd('/') + DdnsHub.HubUrl;
@@ -116,6 +116,9 @@ namespace DdnsSharp.Pages
             }
             if (s)
             {
+                var selectddnsconfig = selectDdnsConfigs.Find(x => x.Value.Guid == ddnsConfig.Guid);
+                int index = selectDdnsConfigs.IndexOf(selectddnsconfig);
+                selectDdnsConfigs[index] = new() { Name =selectddnsconfig.Value.Name, Value = selectddnsconfig.Value };
                 await Task.WhenAll(_message.Success("保存成功"),_hubConnection.SendAsync("DdnsMessage", "保存成功"));
             }
             else
@@ -133,32 +136,20 @@ namespace DdnsSharp.Pages
 
         async Task AddSelectDdnsConfig()
         {
-            ddnsConfig = GetNewDdnsConfig();
-            SelectDdnsConfig Items = new() { Name = ddnsConfig.Name, Value = ddnsConfig };
-            selectDdnsConfigs.Add(Items);
+            var config = GetNewDdnsConfig();
+            selectDdnsConfigs.Add(new() { Name = $"{config.Name}-(未保存)", Value = config });
             await InvokeAsync(StateHasChanged);
+            await Task.Delay(1);
+            ddnsConfig = config;
         }
 
         async Task DeleteDdnsConfig()
         {
-            bool s = false;
-            try 
+            if (await DdnsConfigService.FindAnyAsync(ddnsConfig.Guid))
             {
-                if (await DdnsConfigService.FindAnyAsync(ddnsConfig.Guid))
-                {
-                    s = await DdnsConfigService.DeletedAsync(ddnsConfig);
-                    selectDdnsConfigs.Remove(selectDdnsConfigs.Find(x => x.Value.Guid == ddnsConfig.Guid));
-                    await Task.WhenAll(_message.Success($"{ddnsConfig.ServiceName}-{ddnsConfig.Guid} 删除成功"), _hubConnection.SendAsync("DdnsMessage", $"{ddnsConfig.ServiceName}-{ddnsConfig.Guid} 删除成功"));
-                }
-                else
-                {
-                    await Task.WhenAll(_message.Error($"数据库中不存在 {ddnsConfig.ServiceName}-{ddnsConfig.Guid} 删除失败"), _hubConnection.SendAsync("DdnsMessage", $"数据库中不存在 {ddnsConfig.ServiceName}-{ddnsConfig.Guid} 删除失败"));
-                }
+                await DdnsConfigService.DeletedAsync(ddnsConfig);
             }
-            catch (Exception ex) 
-            {
-                await Task.WhenAll(_message.Error($"{ddnsConfig.ServiceName}-{ddnsConfig.Guid} 删除失败 {ex.Message}"), _hubConnection.SendAsync("DdnsMessage", $"{ddnsConfig.ServiceName}-{ddnsConfig.Guid} 删除失败 {ex.Message}"));
-            }
+            selectDdnsConfigs.Remove(selectDdnsConfigs.Find(x => x.Value.Guid == ddnsConfig.Guid));
             if (selectDdnsConfigs.Any())
             {
                 ddnsConfig = selectDdnsConfigs[0].Value;
@@ -166,9 +157,10 @@ namespace DdnsSharp.Pages
             else
             {
                 ddnsConfig = GetNewDdnsConfig();
-                SelectDdnsConfig Items = new() { Name = ddnsConfig.Name, Value = ddnsConfig };
+                SelectDdnsConfig Items = new() { Name = $"{ddnsConfig.Name}-(未保存)", Value = ddnsConfig };
                 selectDdnsConfigs.Add(Items);
             }
+            await Task.WhenAll(_message.Success($"{ddnsConfig.ServiceName}-{ddnsConfig.Guid} 删除成功"), _hubConnection.SendAsync("DdnsMessage", $"{ddnsConfig.ServiceName}-{ddnsConfig.Guid} 删除成功"));
         }
 
         DdnsConfig GetNewDdnsConfig()
@@ -178,8 +170,8 @@ namespace DdnsSharp.Pages
             {
                 Guid = id,Name = $"{ddnsConfig.ServiceName}-{id}",
                 ServiceName=ddnsConfig.ServiceName,
-                IPV4 = new() { Netinterface = V4netinterfaceDatas[0].Netinterface },
-                IPV6 = new() { Netinterface = V6netinterfaceDatas[0].Netinterface }
+                IPV4 = new() { Netinterface = V4netinterfaceDatas[0].Netinterface,Url="https://4.ipw.cn"},
+                IPV6 = new() { Netinterface = V6netinterfaceDatas[0].Netinterface, Url = "https://6.ipw.cn" }
             };
         }
 

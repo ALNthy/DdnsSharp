@@ -28,12 +28,14 @@
             <RadioGroup Size="large" ButtonStyle="@RadioButtonStyle.Solid" TValue="ServiceType" @bind-Value="ddnsConfig.ServiceName"
                          OnChange="@(
                     async()=>{
-                    var selectddnsconfig = selectDdnsConfigs.Find(x=>x.Name==ddnsConfig.Name);
+                    var selectddnsconfig = selectDdnsConfigs.Find(x=>x.Value.Guid==ddnsConfig.Guid);
                     int index = selectDdnsConfigs.IndexOf(selectddnsconfig);
+                    string[] selectNames = selectddnsconfig.Name.Split("-");
                     string[] Names = ddnsConfig.Name.Split("-");
                     Names[0] = ddnsConfig.ServiceName.ToString();
+                    selectNames[0] = ddnsConfig.ServiceName.ToString();
                     ddnsConfig.Name = string.Join("-",Names);
-                    selectDdnsConfigs[index] = new(){Name = ddnsConfig.Name,Value=ddnsConfig};
+                    selectDdnsConfigs[index] = new(){Name = string.Join("-",selectNames),Value=ddnsConfig};
                     })">
                 @foreach (ServiceType i in Enum.GetValues(typeof(ServiceType)))
                 {

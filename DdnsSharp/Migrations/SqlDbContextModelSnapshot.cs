@@ -26,10 +26,10 @@ namespace DdnsSharp.Migrations
                     b.Property<bool>("Enable")
                         .HasColumnType("INTEGER");
 
-                    b.Property<Guid?>("IPV4Guid")
+                    b.Property<string>("IPV4")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("IPV6Guid")
+                    b.Property<string>("IPV6")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Id")
@@ -49,52 +49,7 @@ namespace DdnsSharp.Migrations
 
                     b.HasKey("Guid");
 
-                    b.HasIndex("IPV4Guid");
-
-                    b.HasIndex("IPV6Guid");
-
                     b.ToTable("T_DdnsConfigs", (string)null);
-                });
-
-            modelBuilder.Entity("DdnsSharp.Model.NetworkConfig", b =>
-                {
-                    b.Property<Guid>("Guid")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Domains")
-                        .HasColumnType("TEXT");
-
-                    b.Property<bool>("Enable")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Netinterface")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Url")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Guid");
-
-                    b.ToTable("T_NetworkConfigs", (string)null);
-                });
-
-            modelBuilder.Entity("DdnsSharp.Model.DdnsConfig", b =>
-                {
-                    b.HasOne("DdnsSharp.Model.NetworkConfig", "IPV4")
-                        .WithMany()
-                        .HasForeignKey("IPV4Guid");
-
-                    b.HasOne("DdnsSharp.Model.NetworkConfig", "IPV6")
-                        .WithMany()
-                        .HasForeignKey("IPV6Guid");
-
-                    b.Navigation("IPV4");
-
-                    b.Navigation("IPV6");
                 });
 #pragma warning restore 612, 618
         }

@@ -18,19 +18,6 @@ namespace DdnsSharp.Repository
         {
             _dbContext = dbContext;
         }
-
-        public override async Task<List<DdnsConfig>> FindAllAsync(Expression<Func<DdnsConfig, bool>> del)
-        {
-            return await _dbContext.ddnsConfigs.Where(del).Include(x=>x.IPV4).Include(x=>x.IPV6).ToListAsync();
-        }
-        public override async Task<List<DdnsConfig>> FindAllAsync()
-        {
-            return await this.FindAllAsync(x=>x.Enable);
-        }
-        public override async Task<DdnsConfig> FindOneAsync(Expression<Func<DdnsConfig, bool>> del)
-        {
-            return await _dbContext.ddnsConfigs.Include(x => x.IPV4).Include(x => x.IPV6).FirstOrDefaultAsync(del);
-        }
         public override async Task<DdnsConfig> FindOneAsync(Guid id)
         {
             return await this.FindOneAsync(x=>x.Guid==id);

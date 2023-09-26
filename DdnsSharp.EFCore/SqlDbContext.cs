@@ -6,7 +6,7 @@ namespace DdnsSharp.EFCore
     public class SqlDbContext : DbContext
     {
 
-        public DbSet<DdnsConfig> ddnsConfigs { get; set; }
+        public DbSet<DdnsConfig> DdnsConfigs { get; set; }
 
         public SqlDbContext(DbContextOptions options) : base(options){}
 

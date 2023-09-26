@@ -22,7 +22,7 @@ namespace DdnsSharp.HostedService
             timer = new Timer(async (s) =>
             {
                 await WokrAsync(stoppingToken);
-            }, null, TimeSpan.Zero, TimeSpan.FromSeconds(10));
+            }, null, TimeSpan.Zero, TimeSpan.FromSeconds(300));
             await Task.Delay(0,stoppingToken);
         }
 
@@ -32,7 +32,7 @@ namespace DdnsSharp.HostedService
             {
                 IDdnsConfigService _ddnsConfigService = scope.ServiceProvider.GetService<IDdnsConfigService>();
                 IHubContext<DdnsHub> hubContext = scope.ServiceProvider.GetService<IHubContext<DdnsHub>>();
-                await _ddnsConfigService.FindAllAsync();
+                await _ddnsConfigService.FindAllAsync(x=>x.Enable);
                 await hubContext.Clients.All.SendAsync("DdnsMessage", "测试内容",cancellationToken);
             };
         }
