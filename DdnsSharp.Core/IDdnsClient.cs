@@ -13,6 +13,6 @@ namespace DdnsSharp.Core
         public Task<string> CreateRecord(string Domain, string RecordType, string RecordLine, string Value, ulong? TTL);
         public Task<string> DeleteRecord(string Domain, ulong? RecordId);
         public Task<string> ModifyRecord(string Domain, string RecordType, string RecordLine, string Value, ulong RecordId, ulong? TTL);
-        public IAsyncEnumerable<RecordInfoListItem> DescribeRecordList(string Domain);
+        public Task<List<RecordInfoListItem>> DescribeRecordList(string Domain);
     }
 }

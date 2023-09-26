@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Net.NetworkInformation;
-using System.Net;
+﻿using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using DdnsSharp.Core.Model;
 using DdnsSharp.Model;
-using System.Xml.Linq;
+using DdnsSharp.Core.DdnsClient;
 
 namespace DdnsSharp.Core
 {
@@ -61,7 +55,6 @@ namespace DdnsSharp.Core
                 {
                     foreach (var iii in ii.Value)
                     {
-                        //yield return new NetinterfaceData() { Name = $"{ii.Key}({iii})", Netinterface = (ii.Key, (byte)ii.Value.IndexOf(iii)) };
                         yield return new NetinterfaceData() { Name = $"{ii.Key}({iii})", Netinterface = new(ii.Key, (byte)ii.Value.IndexOf(iii)) };
                     }
                 }
@@ -81,6 +74,31 @@ namespace DdnsSharp.Core
                     }
                 }
             }
+        }
+
+        public static string GetIPV6(Netinterface netinterface)
+        {
+            var net = GetNetworkIp();
+            string ip = net.Ipv6.Find(x => x.ContainsKey(netinterface.Name))[netinterface.Name][netinterface.Index];
+            return ip;
+        }
+        public static string GetIPV4(Netinterface netinterface)
+        {
+            var net = GetNetworkIp();
+            string ip = net.Ipv4.Find(x =>x.ContainsKey(netinterface.Name))[netinterface.Name][netinterface.Index];
+            return ip;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ddnsConfig"></param>
+        /// <returns></returns>
+        public static (string IPV4, string IPV6) GetIP(DdnsConfig ddnsConfig)
+        {
+            NetworkModel net = GetNetworkIp();
+            string ipv4 = net.Ipv4.Find(x => x.ContainsKey(ddnsConfig.IPV4.Netinterface.Name))[ddnsConfig.IPV4.Netinterface.Name][ddnsConfig.IPV4.Netinterface.Index];
+            string ipv6 = net.Ipv6.Find(x => x.ContainsKey(ddnsConfig.IPV6.Netinterface.Name))[ddnsConfig.IPV6.Netinterface.Name][ddnsConfig.IPV6.Netinterface.Index];
+            return (ipv4, ipv6);
         }
     }
 }

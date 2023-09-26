@@ -1,3 +1,4 @@
+using DdnsSharp.Core;
 using DdnsSharp.EFCore;
 using DdnsSharp.HostedService;
 using DdnsSharp.IRepository;
@@ -45,6 +46,9 @@ public static class IOCExtend
         services.AddScoped<IDdnsConfigRepository, DdnsConfigRepository>();
 
         services.AddScoped<IDdnsConfigService,DdnsConfigService>();
+
+        services.AddScoped<DdnsService>();
+
         return services;
     }
 

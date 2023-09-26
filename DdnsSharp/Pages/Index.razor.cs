@@ -20,6 +20,8 @@ namespace DdnsSharp.Pages
         IMessageService _message {  get; set; }
         [Inject]
         NavigationManager navigationManager { get; set; }
+        [Inject]
+        DdnsService ddnsService { get; set; }
 
         private HubConnection _hubConnection;
 
@@ -70,8 +72,6 @@ namespace DdnsSharp.Pages
             if (configs!=null&&configs.Any()) 
             {
                 ddnsConfig = configs[0];
-                await Console.Out.WriteLineAsync(JsonSerializer.Serialize(ddnsConfig));
-                await Console.Out.WriteLineAsync(JsonSerializer.Serialize(ddnsConfig.IPV6.Netinterface));
 
                 // 保证IP select 正常加载
                 foreach (var i in V4netinterfaceDatas)
@@ -125,6 +125,7 @@ namespace DdnsSharp.Pages
             {
                 await Task.WhenAll(_message.Error("保存失败"),_hubConnection.SendAsync("DdnsMessage", "保存失败"));
             }
+            await ddnsService.StartDdns(ddnsConfig);
         }
 
         async Task DdnsMessage(string message)

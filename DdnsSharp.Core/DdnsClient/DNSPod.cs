@@ -1,4 +1,5 @@
 ﻿using DdnsSharp.Core.Model;
+using DdnsSharp.Model;
 using Newtonsoft.Json.Linq;
 using TencentCloud.Common;
 using TencentCloud.Common.Profile;
@@ -15,6 +16,10 @@ namespace DdnsSharp.Core.DdnsClient
         public DNSPod(string Id, string Key) 
         {
             m_client = new(new() {SecretId=Id,SecretKey=Key },"");
+        }
+        public DNSPod(DdnsConfig ddnsConfig)
+        {
+            m_client = new(new() { SecretId = ddnsConfig.Id, SecretKey = ddnsConfig.Key }, "");
         }
 
         async Task<string> IDdnsClient.CreateRecord(string Domain, string RecordType, string RecordLine, string Value, ulong? TTL)
@@ -34,22 +39,26 @@ namespace DdnsSharp.Core.DdnsClient
             return "删除成功";
         }
 
-        async IAsyncEnumerable<RecordInfoListItem> IDdnsClient.DescribeRecordList(string Domain)
+        async Task<List<RecordInfoListItem>> IDdnsClient.DescribeRecordList(string Domain)
         {
+            List<RecordInfoListItem> recordInfoListItems = new List<RecordInfoListItem>();
             var res = await m_client.DescribeRecordList(new() { Domain = Domain });
             foreach (var i in res.RecordList)
             {
-                yield return new() { 
-                    Name = i.Name, 
-                    RecordId = i.RecordId, 
-                    Value=i.Value, 
-                    Status=i.Status,
-                    UpdatedOn=i.UpdatedOn, 
-                    Type=i.Type, 
-                    Weight=i.Weight, 
-                    Remark=i.Remark,
-                    TTL=i.TTL };
+                recordInfoListItems.Add(new()
+                {
+                    Name = i.Name,
+                    RecordId = i.RecordId,
+                    Value = i.Value,
+                    Status = i.Status,
+                    UpdatedOn = i.UpdatedOn,
+                    Type = i.Type,
+                    Weight = i.Weight,
+                    Remark = i.Remark,
+                    TTL = i.TTL
+                });
             }
+            return recordInfoListItems;
         }
 
         async Task<string> IDdnsClient.ModifyRecord(string Domain, string RecordType, string RecordLine, string Value, ulong RecordId, ulong? TTL)
