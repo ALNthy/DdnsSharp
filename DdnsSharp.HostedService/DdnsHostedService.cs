@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using DdnsSharp.SignalR;
 using Microsoft.AspNetCore.SignalR;
+using DdnsSharp.Core;
 
 namespace DdnsSharp.HostedService
 {
@@ -30,10 +31,8 @@ namespace DdnsSharp.HostedService
         {
             using (var scope =  _serviceScope.CreateAsyncScope())
             {
-                IDdnsConfigService _ddnsConfigService = scope.ServiceProvider.GetService<IDdnsConfigService>();
-                IHubContext<DdnsHub> hubContext = scope.ServiceProvider.GetService<IHubContext<DdnsHub>>();
-                await _ddnsConfigService.FindAllAsync(x=>x.Enable);
-                await hubContext.Clients.All.SendAsync("DdnsMessage", "测试内容",cancellationToken);
+                DdnsService ddnsService = scope.ServiceProvider.GetService<DdnsService>();
+                await ddnsService.DdnsHostedService();
             };
         }
 

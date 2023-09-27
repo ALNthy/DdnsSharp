@@ -10,7 +10,7 @@ namespace DdnsSharp.Model
     {
         public Guid Guid { get; init; } =Guid.NewGuid();
         public bool Enable { get; set; }
-        public GetType Type { get; set; }
+        public GetIPType Type { get; set; }
         public Netinterface Netinterface { get; set; }
         public string Url { get; set; }
         public string Domains { get; set; }

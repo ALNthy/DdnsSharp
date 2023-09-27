@@ -22,21 +22,22 @@ namespace DdnsSharp.Core.DdnsClient
             m_client = new(new() { SecretId = ddnsConfig.Id, SecretKey = ddnsConfig.Key }, "");
         }
 
-        async Task<string> IDdnsClient.CreateRecord(string Domain, string RecordType, string RecordLine, string Value, ulong? TTL)
+        async Task IDdnsClient.CreateRecord(string Domain,string SubDomain, string RecordType, string RecordLine, string Value, ulong? TTL)
         {
-            await m_client.CreateRecord(new() {
-                Domain=Domain,
-                RecordType=RecordType,
-                RecordLine=RecordLine,
-                Value=Value
-            });
-            return "添加成功";
+            await m_client.CreateRecord(new()
+            {
+                Domain = Domain,
+                RecordType = RecordType,
+                RecordLine = RecordLine,
+                Value = Value,
+                SubDomain = SubDomain,
+                TTL = TTL
+            }); ;
         }
 
-        async Task<string> IDdnsClient.DeleteRecord(string Domain, ulong? RecordId)
+        async Task IDdnsClient.DeleteRecord(string Domain, ulong? RecordId)
         {
             await m_client.DeleteRecord(new() { Domain = Domain,RecordId = RecordId});
-            return "删除成功";
         }
 
         async Task<List<RecordInfoListItem>> IDdnsClient.DescribeRecordList(string Domain)
@@ -55,16 +56,16 @@ namespace DdnsSharp.Core.DdnsClient
                     Type = i.Type,
                     Weight = i.Weight,
                     Remark = i.Remark,
-                    TTL = i.TTL
+                    TTL = i.TTL,
+                    Domain = Domain
                 });
             }
             return recordInfoListItems;
         }
 
-        async Task<string> IDdnsClient.ModifyRecord(string Domain, string RecordType, string RecordLine, string Value, ulong RecordId, ulong? TTL)
+        async Task IDdnsClient.ModifyRecord(string Domain,string SubDomain, string RecordType, string RecordLine, string Value, ulong? RecordId, ulong? TTL)
         {
-            await m_client.ModifyRecord(new() { Domain = Domain, RecordType=RecordType, RecordLine=RecordLine, Value=Value, RecordId=RecordId,TTL=TTL});
-            return "修改成功";
+            await m_client.ModifyRecord(new() { Domain = Domain, RecordType=RecordType, RecordLine=RecordLine, Value=Value, RecordId=RecordId,TTL=TTL,SubDomain = SubDomain});
         }
     }
 }

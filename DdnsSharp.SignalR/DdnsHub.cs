@@ -7,7 +7,7 @@ namespace DdnsSharp.SignalR
 
         public async Task DdnsMessage(string message)
         {
-            await Clients.All.SendAsync("DdnsMessage", message);
+            await Clients.All.SendAsync("DdnsMessage", $"{DateTime.Now:yyyy/MM/dd HH:mm:ss} {message}");
         }
         public override async Task OnConnectedAsync()
         {

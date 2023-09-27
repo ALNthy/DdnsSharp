@@ -62,5 +62,8 @@ namespace DdnsSharp.Core.Model
         //     记录缓存时间
         [JsonProperty("TTL")]
         public ulong? TTL { get; set; }
+
+        [JsonProperty("Domain")]
+        public string Domain { get; set; }
     }
 }

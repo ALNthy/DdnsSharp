@@ -1,6 +1,6 @@
 ﻿namespace DdnsSharp.Model
 {
-    public enum GetType
+    public enum GetIPType
     {
         NetInterface,
         Url

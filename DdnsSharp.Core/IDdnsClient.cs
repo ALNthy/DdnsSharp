@@ -10,9 +10,9 @@ namespace DdnsSharp.Core
 {
     public interface IDdnsClient
     {
-        public Task<string> CreateRecord(string Domain, string RecordType, string RecordLine, string Value, ulong? TTL);
-        public Task<string> DeleteRecord(string Domain, ulong? RecordId);
-        public Task<string> ModifyRecord(string Domain, string RecordType, string RecordLine, string Value, ulong RecordId, ulong? TTL);
+        public Task CreateRecord(string Domain,string SubDomain, string RecordType, string RecordLine, string Value, ulong? TTL);
+        public Task DeleteRecord(string Domain, ulong? RecordId);
+        public Task ModifyRecord(string Domain,string SubDomain, string RecordType, string RecordLine, string Value, ulong? RecordId, ulong? TTL);
         public Task<List<RecordInfoListItem>> DescribeRecordList(string Domain);
     }
 }
