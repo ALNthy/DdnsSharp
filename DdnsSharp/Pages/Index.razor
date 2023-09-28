@@ -1,7 +1,17 @@
 ﻿@page "/"
 @implements IAsyncDisposable
 
-
+<Modal Title="日志"
+       Visible="@_visible"
+       OnOk="()=>{_visible=false;}"
+       OnCancel="()=>{_visible=false;}" Style="width:80vw">
+       <div class="log">
+           @foreach(string i in logs)
+        {   
+            <p>@i</p>
+        }
+    </div>
+</Modal>
 <div class="main">
     <div class="main-center">
         <div class="main-center-row">
@@ -10,6 +20,7 @@
                     <Button Type="@ButtonType.Primary" @onclick="SaveAsync">Save</Button>
                 </div>
                 <div class="menu-i">
+                    <Button Type="@ButtonType.Primary" @onclick="()=>{_visible=true;}">日志</Button>
                     <Select TItem="SelectDdnsConfig"
                             TItemValue="DdnsConfig"
                             DataSource="@selectDdnsConfigs"

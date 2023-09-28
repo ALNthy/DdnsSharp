@@ -3,6 +3,6 @@
     public enum ServiceType
     {
         DnsPod,
-        AliYun
+        //AliYun
     }
 }

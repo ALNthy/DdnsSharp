@@ -44,6 +44,9 @@ namespace DdnsSharp.Pages
         List<DdnsConfig> configs;
         List<SelectDdnsConfig> selectDdnsConfigs = new();
         DdnsConfig ddnsConfig = new();
+        bool _visible = false;
+
+        List<string> logs = new();
 
         protected override async Task OnParametersSetAsync()
         {
@@ -119,19 +122,20 @@ namespace DdnsSharp.Pages
                 var selectddnsconfig = selectDdnsConfigs.Find(x => x.Value.Guid == ddnsConfig.Guid);
                 int index = selectDdnsConfigs.IndexOf(selectddnsconfig);
                 selectDdnsConfigs[index] = new() { Name =selectddnsconfig.Value.Name, Value = selectddnsconfig.Value };
-                await Task.WhenAll(_message.Success("保存成功"),_hubConnection.SendAsync("DdnsMessage", "保存成功"));
+                await Task.WhenAll(_hubConnection.SendAsync("DdnsMessage", $"{ddnsConfig.Name}保存成功"));
             }
             else
             {
-                await Task.WhenAll(_message.Error("保存失败"),_hubConnection.SendAsync("DdnsMessage", "保存失败"));
+                await Task.WhenAll(_hubConnection.SendAsync("DdnsMessage", $"{ddnsConfig.Name}保存失败"));
             }
             await ddnsService.StartDdns(ddnsConfig);
         }
 
         async Task DdnsMessage(string message)
         {
-            await Console.Out.WriteLineAsync(message);
-            await InvokeAsync(StateHasChanged);
+            logs.Add(message);
+
+            await Task.WhenAll(_message.Info(message),InvokeAsync(StateHasChanged));
         }
 
 
