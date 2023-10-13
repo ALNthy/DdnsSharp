@@ -165,7 +165,7 @@ namespace DdnsSharp.Pages
                 SelectDdnsConfig Items = new() { Name = $"{ddnsConfig.Name}-(未保存)", Value = ddnsConfig };
                 selectDdnsConfigs.Add(Items);
             }
-            await Task.WhenAll(_message.Success($"{ddnsConfig.ServiceName}-{ddnsConfig.Guid} 删除成功"), _hubConnection.SendAsync("DdnsMessage", $"{ddnsConfig.ServiceName}-{ddnsConfig.Guid} 删除成功"));
+            await Task.WhenAll(_hubConnection.SendAsync("DdnsMessage", $"{ddnsConfig.ServiceName}-{ddnsConfig.Guid} 删除成功"));
         }
 
         DdnsConfig GetNewDdnsConfig()
