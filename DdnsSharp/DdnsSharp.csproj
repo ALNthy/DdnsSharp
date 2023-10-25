@@ -24,7 +24,6 @@
     <ProjectReference Include="..\DdnsSharp.Model\DdnsSharp.Model.csproj" />
     <ProjectReference Include="..\DdnsSharp.Repository\DdnsSharp.Repository.csproj" />
     <ProjectReference Include="..\DdnsSharp.Services\DdnsSharp.Services.csproj" />
-    <ProjectReference Include="..\DdnsSharp.SignalR\DdnsSharp.SignalR.csproj" />
   </ItemGroup>
 
 </Project>

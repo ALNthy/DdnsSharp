@@ -5,7 +5,6 @@ using DdnsSharp.IRepository;
 using DdnsSharp.IServices;
 using DdnsSharp.Repository;
 using DdnsSharp.Services;
-using DdnsSharp.SignalR;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -48,6 +47,7 @@ public static class IOCExtend
         services.AddScoped<IDdnsConfigService,DdnsConfigService>();
 
         services.AddScoped<DdnsService>();
+        services.AddSingleton<DdnsMessageContainer>();
 
         return services;
     }

@@ -2,7 +2,6 @@
 using DdnsSharp.Core.Model;
 using DdnsSharp.IServices;
 using DdnsSharp.Model;
-using DdnsSharp.SignalR;
 using Microsoft.AspNetCore.SignalR;
 
 namespace DdnsSharp.Core
@@ -11,19 +10,20 @@ namespace DdnsSharp.Core
     {
         private readonly IDdnsConfigService _dnsConfigService;
         private readonly IHubContext<DdnsHub> _hubContext;
-        public DdnsService(IDdnsConfigService ddnsConfigService, IHubContext<DdnsHub> hubContext) 
+        private readonly DdnsMessageContainer _messageContainer;
+        public DdnsService(IDdnsConfigService ddnsConfigService, IHubContext<DdnsHub> hubContext,DdnsMessageContainer ddnsMessageContainer) 
         { 
             _dnsConfigService = ddnsConfigService;
             _hubContext = hubContext;
+            _messageContainer = ddnsMessageContainer;
         }
         private IDdnsClient GetDdnsClient(DdnsConfig ddnsConfig) 
         {
-            switch (ddnsConfig.ServiceName)
+            return ddnsConfig.ServiceName switch
             {
-                case ServiceType.DnsPod:
-                    return new DNSPod(ddnsConfig);
-                default: throw new Exception("没有此类服务");
-            }
+                ServiceType.DnsPod => new DNSPod(ddnsConfig),
+                _ => throw new Exception("没有此类服务"),
+            };
         }
 
         public async Task StartDdns(DdnsConfig ddnsConfig)
@@ -197,7 +197,9 @@ namespace DdnsSharp.Core
         }
         private async Task HubDdnsMessageSendAsync(string Message)
         {
-            await _hubContext.Clients.All.SendAsync("DdnsMessage", $"{DateTime.Now:yyyy/MM/dd HH:mm:ss} {Message}");
+            string msg = $"{DateTime.Now:yyyy/MM/dd HH:mm:ss} {Message}";
+            _messageContainer.AddMessage(msg);
+            await _hubContext.Clients.All.SendAsync("DdnsMessage",msg);
         }
 
         public async Task DdnsHostedService()

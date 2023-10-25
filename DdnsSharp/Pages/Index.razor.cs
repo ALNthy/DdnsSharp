@@ -4,7 +4,6 @@ using DdnsSharp.Core.DdnsClient;
 using DdnsSharp.Core.Model;
 using DdnsSharp.IServices;
 using DdnsSharp.Model;
-using DdnsSharp.SignalR;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.AspNetCore.SignalR.Client;
@@ -22,6 +21,8 @@ namespace DdnsSharp.Pages
         NavigationManager navigationManager { get; set; }
         [Inject]
         DdnsService ddnsService { get; set; }
+        [Inject]
+        DdnsMessageContainer messageContainer { get; set; }
 
         private HubConnection _hubConnection;
 
@@ -50,6 +51,10 @@ namespace DdnsSharp.Pages
 
         protected override async Task OnParametersSetAsync()
         {
+            foreach (string message in messageContainer.GetMessages())
+            {
+                logs.Add(message);
+            }
             _ttl = new List<TTL>
             {
                 new TTL { Value = null, Name = "自动" },

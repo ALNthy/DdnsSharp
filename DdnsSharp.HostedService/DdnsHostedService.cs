@@ -1,8 +1,5 @@
-﻿using DdnsSharp.IServices;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using DdnsSharp.SignalR;
-using Microsoft.AspNetCore.SignalR;
 using DdnsSharp.Core;
 
 namespace DdnsSharp.HostedService

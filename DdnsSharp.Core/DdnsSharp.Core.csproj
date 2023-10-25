@@ -9,12 +9,12 @@
   <ItemGroup>
     <PackageReference Include="AlibabaCloud.SDK.Alidns20150109" Version="3.0.7" />
     <PackageReference Include="TencentCloudSDK.Dnspod" Version="3.0.849" />
+	      <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.1.0" />	  
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\DdnsSharp.IServices\DdnsSharp.IServices.csproj" />
     <ProjectReference Include="..\DdnsSharp.Model\DdnsSharp.Model.csproj" />
-    <ProjectReference Include="..\DdnsSharp.SignalR\DdnsSharp.SignalR.csproj" />
   </ItemGroup>
 
 </Project>
