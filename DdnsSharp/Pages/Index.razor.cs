@@ -26,11 +26,19 @@ namespace DdnsSharp.Pages
 
         private HubConnection _hubConnection;
 
-        class TTL
-        {
-            public int? Value { get; set; }
-            public string Name { get; set; }
-        }
+        //private record TTL
+        //{
+        //    public int? Value { get; set; }
+        //    public string Name { get; set; }
+
+        //    public TTL(int? Value, string Name)
+        //    { 
+        //        this.Value = Value;
+        //        this.Name = Name;
+        //    }
+        //}
+
+        private record TTL(int? Value, string Name);
 
         class SelectDdnsConfig
         {
@@ -57,15 +65,15 @@ namespace DdnsSharp.Pages
             }
             _ttl = new List<TTL>
             {
-                new TTL { Value = null, Name = "自动" },
-                new TTL { Value = 1, Name = "1秒" },
-                new TTL { Value = 5 , Name = "5秒" },
-                new TTL { Value = 10 , Name = "10秒" },
-                new TTL { Value = 60 , Name = "1分钟" },
-                new TTL { Value = 120 , Name = "2分钟" },
-                new TTL { Value = 600 , Name = "10分钟" },
-                new TTL { Value = 1800 , Name = "30分钟" },
-                new TTL { Value = 3600 , Name = "1小时" }
+                new TTL(null,"自动"),
+                new TTL (1, "1秒"),
+                new TTL (5, "5秒"),
+                new TTL (10, "10秒"),
+                new TTL (60, "1分钟"),
+                new TTL (120, "2分钟"),
+                new TTL (600, "10分钟"),
+                new TTL (1800, "30分钟"),
+                new TTL (3600, "1小时")
             };
             V6netinterfaceDatas = Utils.V6NetinterfaceDatas().ToList();
             V4netinterfaceDatas = Utils.V4NetinterfaceDatas().ToList();
