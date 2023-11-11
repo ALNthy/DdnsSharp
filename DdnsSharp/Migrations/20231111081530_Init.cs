@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DdnsSharp.Migrations
 {
     /// <inheritdoc />
-    public partial class INIT : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -23,7 +23,7 @@ namespace DdnsSharp.Migrations
                     Key = table.Column<string>(type: "TEXT", nullable: true),
                     IPV4 = table.Column<string>(type: "TEXT", nullable: true),
                     IPV6 = table.Column<string>(type: "TEXT", nullable: true),
-                    Ttl = table.Column<uint>(type: "INTEGER", nullable: true)
+                    Ttl = table.Column<ulong>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {

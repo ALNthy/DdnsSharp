@@ -25,5 +25,6 @@ RUN dotnet publish "DdnsSharp.csproj" -c Release -o /app/publish /p:UseAppHost=f
 
 FROM base AS final
 WORKDIR /app
+COPY "DdnsSharp/db.db" .
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "DdnsSharp.dll"]

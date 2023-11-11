@@ -44,7 +44,7 @@ namespace DdnsSharp.Migrations
                     b.Property<int>("ServiceName")
                         .HasColumnType("INTEGER");
 
-                    b.Property<uint?>("Ttl")
+                    b.Property<ulong?>("Ttl")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Guid");
