@@ -18,7 +18,7 @@ namespace DdnsSharp.Core
             string msg = $"{DateTime.Now:yyyy/MM/dd HH:mm:ss} {message}";
             await Clients.All.SendAsync("DdnsMessage", msg);
             logger.LogInformation(msg);
-            messageContainer.AddMessage(message);
+            messageContainer.AddMessage(msg);
         }
         public override async Task OnConnectedAsync()
         {
