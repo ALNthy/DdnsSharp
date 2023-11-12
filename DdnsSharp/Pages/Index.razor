@@ -31,7 +31,11 @@
                             ValueName="@nameof(SelectDdnsConfig.Value)"
                             OnSelectedItemChanged="@(
                             item => 
-                            {UpdateDdnsConfig(item.Value);})">
+                            {
+                                ddnsConfig = UpdateDdnsConfig(item.Value);
+                                ddnsConfig.IPV4.Netinterface = V4netinterfaceDatas.Find(x => x.Netinterface.Name == ddnsConfig.IPV4.Netinterface.Name&&x.Netinterface.Index==ddnsConfig.IPV4.Netinterface.Index).Netinterface;
+                                ddnsConfig.IPV6.Netinterface = V6netinterfaceDatas.Find(x => x.Netinterface.Name == ddnsConfig.IPV6.Netinterface.Name&&x.Netinterface.Index==ddnsConfig.IPV6.Netinterface.Index).Netinterface;
+                            })">
                     </Select>
                     <Button Type="@ButtonType.Primary" @onclick="AddSelectDdnsConfig">新增配置</Button>
                     <Button Danger Type="@ButtonType.Primary" @onclick="DeleteDdnsConfig">删除配置</Button>
