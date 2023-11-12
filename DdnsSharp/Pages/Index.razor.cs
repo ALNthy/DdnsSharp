@@ -39,7 +39,8 @@ namespace DdnsSharp.Pages
         //}
 
         private record TTL(int? Value, string Name);
-
+        private (string id, string key,string oid,string okey) user = (string.Empty, string.Empty,string.Empty,string.Empty);
+        private const string cover = "************";
         class SelectDdnsConfig
         {
             public string Name { get; set; }
@@ -57,6 +58,31 @@ namespace DdnsSharp.Pages
 
         List<string> logs = new();
 
+        DdnsConfig UpdateDdnsConfig(DdnsConfig config)
+        { 
+            ddnsConfig = config;
+            if (!string.IsNullOrEmpty(ddnsConfig.Id))
+            {
+                user.id = cover;
+                user.oid = ddnsConfig.Id;
+            }
+            else
+            {
+                user.id = string.Empty;
+                user.oid = string.Empty;
+            }
+            if (!string.IsNullOrEmpty(ddnsConfig.Key))
+            {
+                user.key = cover;
+                user.okey = ddnsConfig.Key;
+            }
+            else
+            {
+                user.key = string.Empty;
+                user.okey = string.Empty;
+            }
+            return ddnsConfig;
+        }
         protected override async Task OnParametersSetAsync()
         {
             foreach (string message in messageContainer.GetMessages())
@@ -87,7 +113,7 @@ namespace DdnsSharp.Pages
 
             if (configs!=null&&configs.Any()) 
             {
-                ddnsConfig = configs[0];
+                ddnsConfig = UpdateDdnsConfig(configs[0]);
 
                 // 保证IP select 正常加载
                 foreach (var i in V4netinterfaceDatas)
@@ -107,7 +133,7 @@ namespace DdnsSharp.Pages
             }
             else 
             {
-                ddnsConfig = GetNewDdnsConfig();
+                ddnsConfig = UpdateDdnsConfig(GetNewDdnsConfig());
                 selectDdnsConfigs.Add(new() { Name = $"{ddnsConfig.Name}-(未保存)", Value = ddnsConfig });
             }
             string baseUrl = navigationManager.BaseUri;
@@ -121,6 +147,36 @@ namespace DdnsSharp.Pages
 #if DEBUG
             await Console.Out.WriteLineAsync(JsonSerializer.Serialize(ddnsConfig));
 #endif
+            if (string.IsNullOrEmpty(user.oid))
+            {
+                ddnsConfig.Id = user.id;
+            }
+            else
+            {
+                if (user.id != cover)
+                {
+                    ddnsConfig.Id = user.id;
+                }
+                else
+                {
+                    ddnsConfig.Id = user.oid;
+                }
+            }
+            if (string.IsNullOrEmpty(user.okey))
+            {
+                ddnsConfig.Key = user.okey;
+            }
+            else
+            {
+                if (user.key != cover)
+                {
+                    ddnsConfig.Key = user.key;
+                }
+                else
+                {
+                    ddnsConfig.Key = user.okey;
+                }
+            }
             bool s = false;
             if (await DdnsConfigService.FindAnyAsync(ddnsConfig.Guid))
             {
@@ -158,7 +214,7 @@ namespace DdnsSharp.Pages
             selectDdnsConfigs.Add(new() { Name = $"{config.Name}-(未保存)", Value = config });
             await InvokeAsync(StateHasChanged);
             await Task.Delay(1);
-            ddnsConfig = config;
+            ddnsConfig = UpdateDdnsConfig(config);
         }
 
         async Task DeleteDdnsConfig()
@@ -170,11 +226,11 @@ namespace DdnsSharp.Pages
             selectDdnsConfigs.Remove(selectDdnsConfigs.Find(x => x.Value.Guid == ddnsConfig.Guid));
             if (selectDdnsConfigs.Any())
             {
-                ddnsConfig = selectDdnsConfigs[0].Value;
+                ddnsConfig = UpdateDdnsConfig(selectDdnsConfigs[0].Value);
             }
             else
             {
-                ddnsConfig = GetNewDdnsConfig();
+                ddnsConfig = UpdateDdnsConfig(GetNewDdnsConfig());
                 SelectDdnsConfig Items = new() { Name = $"{ddnsConfig.Name}-(未保存)", Value = ddnsConfig };
                 selectDdnsConfigs.Add(Items);
             }

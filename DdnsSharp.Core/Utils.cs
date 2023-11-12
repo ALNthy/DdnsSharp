@@ -95,9 +95,24 @@ namespace DdnsSharp.Core
         /// <returns></returns>
         public static (string IPV4, string IPV6) GetIP(DdnsConfig ddnsConfig)
         {
+            string ipv4, ipv6;
             NetworkModel net = GetNetworkIp();
-            string ipv4 = net.Ipv4.Find(x => x.ContainsKey(ddnsConfig.IPV4.Netinterface.Name))[ddnsConfig.IPV4.Netinterface.Name][ddnsConfig.IPV4.Netinterface.Index];
-            string ipv6 = net.Ipv6.Find(x => x.ContainsKey(ddnsConfig.IPV6.Netinterface.Name))[ddnsConfig.IPV6.Netinterface.Name][ddnsConfig.IPV6.Netinterface.Index];
+            if (ddnsConfig.IPV4 != null)
+            {
+                ipv4 = string.Empty;
+            }
+            else
+            { 
+            ipv4 = net.Ipv4.Find(x => x.ContainsKey(ddnsConfig.IPV4.Netinterface.Name))[ddnsConfig.IPV4.Netinterface.Name][ddnsConfig.IPV4.Netinterface.Index];
+            }
+            if (ddnsConfig.IPV6 != null)
+            {
+                ipv6 = string.Empty;
+            }
+            else
+            { 
+            ipv6 = net.Ipv6.Find(x => x.ContainsKey(ddnsConfig.IPV6.Netinterface.Name))[ddnsConfig.IPV6.Netinterface.Name][ddnsConfig.IPV6.Netinterface.Index];
+            }
             return (ipv4, ipv6);
         }
     }

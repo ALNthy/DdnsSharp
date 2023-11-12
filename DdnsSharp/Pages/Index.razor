@@ -1,6 +1,8 @@
 ﻿@page "/"
+
 @implements IAsyncDisposable
 
+<PageTitle>@nameof(DdnsSharp)</PageTitle>
 <Modal Title="日志"
        Visible="@_visible"
        OnOk="()=>{_visible=false;}"
@@ -26,7 +28,10 @@
                             DataSource="@selectDdnsConfigs"
                     @bind-Value="ddnsConfig"
                             LabelName="@nameof(SelectDdnsConfig.Name)"
-                            ValueName="@nameof(SelectDdnsConfig.Value)">
+                            ValueName="@nameof(SelectDdnsConfig.Value)"
+                            OnSelectedItemChanged="@(
+                            item => 
+                            {UpdateDdnsConfig(item.Value);})">
                     </Select>
                     <Button Type="@ButtonType.Primary" @onclick="AddSelectDdnsConfig">新增配置</Button>
                     <Button Danger Type="@ButtonType.Primary" @onclick="DeleteDdnsConfig">删除配置</Button>
@@ -58,14 +63,24 @@
                 <div class="row">
                     <label>Id</label>
                 </div>
-                <Input @bind-Value="ddnsConfig.Id"/>
-            </div>
+                <Input @bind-Value="user.id" OnBlur="@(()=>{
+                    if(user.id!=cover)
+                    {
+                        user.oid = user.id;
+                    }
+                })"/>
+            </div>  
             <br />
             <div class="main-center-row-i">
                 <div class="row">
                     <label>Key</label>
                 </div>
-                <Input @bind-Value="ddnsConfig.Key" />
+                <Input @bind-Value="user.key" OnBlur="@(()=>{
+                    if(user.key!=cover)
+                    {
+                        user.okey = user.key;
+                    }
+                })" />
             </div>
             <br />
             <div class="main-center-row-i">
