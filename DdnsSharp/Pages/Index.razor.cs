@@ -203,8 +203,11 @@ namespace DdnsSharp.Pages
         async Task DdnsMessage(string message)
         {
             logs.Add(message);
-
-            await Task.WhenAll(_message.Info(message),InvokeAsync(StateHasChanged));
+            _=Task.Run(async () =>
+            {
+                await Task.WhenAll(_message.Info(message), InvokeAsync(StateHasChanged));
+            });
+            await Task.Yield();
         }
 
 

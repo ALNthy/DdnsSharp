@@ -17,7 +17,14 @@ namespace DdnsSharp.Model
 
         public string[] GetDomains()
         {
-            return Domains.Split("\n");
+            if (string.IsNullOrEmpty(Domains))
+            {
+                return Array.Empty<string>();
+            }
+            else
+            {
+                return Domains.Split("\n");
+            }
         }
     }
 }
