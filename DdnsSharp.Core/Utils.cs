@@ -97,7 +97,7 @@ namespace DdnsSharp.Core
         {
             string ipv4, ipv6;
             NetworkModel net = GetNetworkIp();
-            if (ddnsConfig.IPV4 != null)
+            if (ddnsConfig.IPV4 is null)
             {
                 ipv4 = string.Empty;
             }
@@ -105,7 +105,7 @@ namespace DdnsSharp.Core
             { 
             ipv4 = net.Ipv4.Find(x => x.ContainsKey(ddnsConfig.IPV4.Netinterface.Name))[ddnsConfig.IPV4.Netinterface.Name][ddnsConfig.IPV4.Netinterface.Index];
             }
-            if (ddnsConfig.IPV6 != null)
+            if (ddnsConfig.IPV6 is null)
             {
                 ipv6 = string.Empty;
             }
