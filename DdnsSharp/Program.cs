@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-
+builder.Services.AddHttpClient("ddns");
 builder.Services.AddSignalR();
 
 builder.Services.AddDbContext<SqlDbContext>(x=>x.UseSqlite("Data Source=db.db",b=>b.MigrationsAssembly("DdnsSharp")));
